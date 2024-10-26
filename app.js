@@ -41,7 +41,7 @@ const app = {
 
 			const soilMeasure = moistureSensor.digitalRead();
 			const isSoilWet = soilMeasure === 1 ? "Wet" : "Dry";
-			const lampStatus = readRelayState(relay4);
+			const lampStatus = readRelayState(relay1);
 			const isLampOn = lampStatus === 0 ? "ON" : "OFF";
 			const room = this.sensors[sensor].name;
 			const humidity = readout.humidity.toFixed(1);
@@ -85,7 +85,7 @@ app.connect()
 	});
 
 function controlTemperature(temperature) {
-	const isLampOn = readRelayState(relay4) === 0;
-	if (temperature > maxTemperatureForLamp && isLampOn) switchRelay(relay4, 1);
-	if (temperature < minTemperatureForLamp && !isLampOn) switchRelay(relay4, 0);
+	const isLampOn = readRelayState(relay1) === 0;
+	if (temperature > maxTemperatureForLamp && isLampOn) switchRelay(relay1, 1);
+	if (temperature < minTemperatureForLamp && !isLampOn) switchRelay(relay1, 0);
 }
