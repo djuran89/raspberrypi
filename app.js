@@ -8,7 +8,7 @@ const interval = 5000;
 
 // // Config
 const maxTemperatureForLamp = 24;
-const minTemperatureForLamp = 17;
+const minTemperatureForLamp = 18;
 
 // // Temperatura i vlažnost vazduha
 const temperaturGpio = 17;
@@ -89,6 +89,12 @@ app.connect()
 
 function controlTemperature(temperature) {
 	const isLampOn = readRelayState(relay1) === 0;
-	if (temperature > maxTemperatureForLamp && isLampOn) switchRelay(relay1, 1);
-	if (temperature < minTemperatureForLamp && !isLampOn) switchRelay(relay1, 0);
+	if (temperature > maxTemperatureForLamp && isLampOn) {
+		switchRelay(relay1, 1);
+		console.log("Lamp is off");
+	}
+	if (temperature <= minTemperatureForLamp && !isLampOn) {
+		switchRelay(relay1, 0);
+		console.log("Lamp is on");
+	}
 }
