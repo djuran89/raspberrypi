@@ -1,14 +1,12 @@
 require("dotenv").config();
 const req = require("express/lib/request");
-// const Gpio = require("pigpio").Gpio;
-// const sensorLib = require("node-dht-sensor");
-// const server = require("./bin/server");
-// const moment = require("moment");
-// const modelSensor = require("./models/sensor");
+const Gpio = require("pigpio").Gpio;
+const sensorLib = require("node-dht-sensor");
+const server = require("./bin/server");
+const moment = require("moment");
+const modelSensor = require("./models/sensor");
 const sendMessage = require("./lib/telefgraf");
 const server = require("./bin/server");
-
-return sendMessage("Application started");
 
 const minutes = 1;
 const interval = 1000 * 60 * minutes;
@@ -78,6 +76,7 @@ const app = {
 			}
 		} catch (err) {
 			console.error(err);
+			sendMessage(err);
 		}
 	},
 	run: () => setInterval(() => app.read(), interval),
@@ -94,6 +93,7 @@ app.connect()
 				// Start app and clear interval
 				app.run();
 				console.log("Application started");
+				sendMessage("Application started");
 				clearInterval(startAppInterval);
 			}
 		}, 1000);
