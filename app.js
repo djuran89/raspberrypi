@@ -4,7 +4,8 @@ const server = require("./bin/server");
 const moment = require("moment");
 const modelSensor = require("./models/sensor");
 
-const interval = 5000;
+const minutes = 5;
+const interval = 1000 * 60 * minutes;
 
 // // Config
 const maxTemperatureForLamp = 24;
@@ -72,9 +73,9 @@ let startAppInterval;
 app.connect()
 	.then(() => {
 		startAppInterval = setInterval(() => {
-			const isRoundSecond = moment().second() % (interval / 1000) === 0;
+			const startApp = moment().startOf("minute").add(1, "minutes") === moment().startOf("minute");
 
-			if (isRoundSecond) {
+			if (startApp) {
 				// Start app and clear interval
 				app.run();
 				console.log("Application started");
