@@ -10,7 +10,7 @@ const server = require("./bin/server");
 
 return sendMessage("Application started");
 
-const minutes = 5;
+const minutes = 1;
 const interval = 1000 * 60 * minutes;
 
 // // Config
