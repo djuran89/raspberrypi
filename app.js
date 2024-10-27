@@ -1,8 +1,14 @@
-const Gpio = require("pigpio").Gpio;
-const sensorLib = require("node-dht-sensor");
+require("dotenv").config();
+const req = require("express/lib/request");
+// const Gpio = require("pigpio").Gpio;
+// const sensorLib = require("node-dht-sensor");
+// const server = require("./bin/server");
+// const moment = require("moment");
+// const modelSensor = require("./models/sensor");
+const sendMessage = require("./lib/telefgraf");
 const server = require("./bin/server");
-const moment = require("moment");
-const modelSensor = require("./models/sensor");
+
+return sendMessage("Application started");
 
 const minutes = 5;
 const interval = 1000 * 60 * minutes;
@@ -65,6 +71,9 @@ const app = {
 
 			const message = `[${room}] temperature: ${temperature}°C, humidity: ${humidity}%, soil: ${isSoilWet}, lamp: ${isLampOn}`;
 			console.log(message);
+
+			// Check if soil is wet
+			controlSoilHumidity(isSoilWet);
 		}
 	},
 	run: () => setInterval(() => app.read(), interval),
@@ -101,4 +110,8 @@ function controlTemperature(temperature) {
 		switchRelay(relay1, 0);
 		console.log("Lamp is on");
 	}
+}
+
+function controlSoilHumidity(soilHumidity) {
+	if (soilHumidity === "Dry") sendMessage("Soil is dry, please water the plant");
 }
