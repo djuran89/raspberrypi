@@ -6,7 +6,6 @@ const server = require("./bin/server");
 const moment = require("moment");
 const modelSensor = require("./models/sensor");
 const sendMessage = require("./lib/telefgraf");
-const server = require("./bin/server");
 
 const minutes = 1;
 const interval = 1000 * 60 * minutes;
