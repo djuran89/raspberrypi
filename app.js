@@ -54,7 +54,7 @@ const app = {
 			modelSensor.create({
 				name: room,
 				timestamp: moment().format(),
-				interval: interval / 1000,
+				interval: minutes,
 				temperature: temperature,
 				air_humidity: humidity,
 				soil_humidity: isSoilWet,
