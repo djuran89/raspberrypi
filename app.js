@@ -38,42 +38,46 @@ const app = {
 		try {
 			await server();
 		} catch (err) {
-			throw new Error(err);
+			console.error(err);
 		}
 	},
 	sensors: [{ name: "Garden", type: 11, pin: temperaturGpio }],
 	read: function () {
-		for (var sensor in this.sensors) {
-			var readout = sensorLib.read(this.sensors[sensor].type, this.sensors[sensor].pin);
+		try {
+			for (var sensor in this.sensors) {
+				var readout = sensorLib.read(this.sensors[sensor].type, this.sensors[sensor].pin);
 
-			// Check if temperature is in range
-			controlTemperature(readout.temperature);
+				// Check if temperature is in range
+				controlTemperature(readout.temperature);
 
-			const soilMeasure = moistureSensor.digitalRead();
-			const isSoilWet = soilMeasure === 1 ? "Wet" : "Dry";
-			const lampStatus = readRelayState(relay1);
-			const isLampOn = lampStatus === 0 ? "ON" : "OFF";
-			const room = this.sensors[sensor].name;
-			const humidity = readout.humidity.toFixed(1);
-			const temperature = readout.temperature.toFixed(1);
+				const soilMeasure = moistureSensor.digitalRead();
+				const isSoilWet = soilMeasure === 1 ? "Wet" : "Dry";
+				const lampStatus = readRelayState(relay1);
+				const isLampOn = lampStatus === 0 ? "ON" : "OFF";
+				const room = this.sensors[sensor].name;
+				const humidity = readout.humidity.toFixed(1);
+				const temperature = readout.temperature.toFixed(1);
 
-			modelSensor.create({
-				name: room,
-				timestamp: moment().format(),
-				interval: minutes,
-				temperature: temperature,
-				air_humidity: humidity,
-				soil_humidity: isSoilWet,
-				soil_humidity_status: soilMeasure,
-				ralay_1: isLampOn,
-				ralay_1_status: lampStatus,
-			});
+				modelSensor.create({
+					name: room,
+					timestamp: moment().format(),
+					interval: minutes,
+					temperature: temperature,
+					air_humidity: humidity,
+					soil_humidity: isSoilWet,
+					soil_humidity_status: soilMeasure,
+					ralay_1: isLampOn,
+					ralay_1_status: lampStatus,
+				});
 
-			const message = `[${room}] temperature: ${temperature}°C, humidity: ${humidity}%, soil: ${isSoilWet}, lamp: ${isLampOn}`;
-			console.log(message);
+				const message = `[${room}] temperature: ${temperature}°C, humidity: ${humidity}%, soil: ${isSoilWet}, lamp: ${isLampOn}`;
+				console.log(message);
 
-			// Check if soil is wet
-			controlSoilHumidity(isSoilWet);
+				// Check if soil is wet
+				controlSoilHumidity(isSoilWet);
+			}
+		} catch (err) {
+			console.error(err);
 		}
 	},
 	run: () => setInterval(() => app.read(), interval),
