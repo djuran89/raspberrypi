@@ -4,8 +4,10 @@ const server = require("./bin/server");
 const moment = require("moment");
 const modelSensor = require("./models/sensor");
 
+
 const minutes = 5;
 const interval = 1000 * 60 * minutes;
+const startTimeOfApp = moment().startOf("minute").add(1, "minutes");
 
 // // Config
 const maxTemperatureForLamp = 24;
@@ -69,13 +71,15 @@ const app = {
 	},
 	run: () => setInterval(() => app.read(), interval),
 };
+
+// START APPP
 let startAppInterval;
 app.connect()
 	.then(() => {
 		startAppInterval = setInterval(() => {
-			const startApp = moment().startOf("minute").add(1, "minutes") === moment().startOf("minute");
+			const shouldAppStart = startTimeOfApp === moment();
 
-			if (startApp) {
+			if (shouldAppStart) {
 				// Start app and clear interval
 				app.run();
 				console.log("Application started");
@@ -88,6 +92,7 @@ app.connect()
 		startAppInterval && clearInterval(startAppInterval);
 	});
 
+// CONTROLS
 function controlTemperature(temperature) {
 	const isLampOn = readRelayState(relay1) === 0;
 	if (temperature > maxTemperatureForLamp && isLampOn) {
