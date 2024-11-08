@@ -92,9 +92,9 @@ app.connect()
 
 			if (shouldAppStart) {
 				// Start app and clear interval
-				app.run();
+				app.read();
 				console.log("Application started");
-				sendMessage("Application started");
+				// sendMessage("Application started");
 				clearInterval(startAppInterval);
 			}
 		}, 1000);
