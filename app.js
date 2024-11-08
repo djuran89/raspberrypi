@@ -118,6 +118,7 @@ function controlTemperature(temperature) {
 }
 
 function controlSoilHumidity(soilHumidity, previesValue) {
-	if (previesValue.previesValue === soilHumidity) return;
+	console.log(soilHumidity, previesValue);
+	if (previesValue.soil_humidity === soilHumidity) return;
 	if (soilHumidity === "Dry") sendMessage("Soil is dry, please water the plant");
 }
