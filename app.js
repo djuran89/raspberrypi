@@ -56,7 +56,10 @@ const app = {
 				const temperature = readout.temperature.toFixed(1);
 
 				const previesValue = await modelSensor.findOne().sort({ timestamp: -1 });
-				console.log(previesValue);
+
+				// Check if soil is wet
+				controlSoilHumidity(isSoilWet, previesValue);
+
 				modelSensor.create({
 					name: room,
 					timestamp: moment().format(),
@@ -71,9 +74,6 @@ const app = {
 
 				const message = `[${room}] temperature: ${temperature}°C, humidity: ${humidity}%, soil: ${isSoilWet}, lamp: ${isLampOn}`;
 				console.log(message);
-
-				// Check if soil is wet
-				controlSoilHumidity(isSoilWet, previesValue);
 			}
 		} catch (err) {
 			console.error(err);
@@ -92,9 +92,9 @@ app.connect()
 
 			if (shouldAppStart) {
 				// Start app and clear interval
-				app.read();
+				app.run();
 				console.log("Application started");
-				// sendMessage("Application started");
+				sendMessage("Application started");
 				clearInterval(startAppInterval);
 			}
 		}, 1000);
@@ -118,7 +118,6 @@ function controlTemperature(temperature) {
 }
 
 function controlSoilHumidity(soilHumidity, previesValue) {
-	console.log(soilHumidity, previesValue);
 	if (previesValue.soil_humidity === soilHumidity) return;
 	if (soilHumidity === "Dry") sendMessage("Soil is dry, please water the plant");
 }
