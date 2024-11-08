@@ -39,7 +39,7 @@ const app = {
 		}
 	},
 	sensors: [{ name: "Garden", type: 11, pin: temperaturGpio }],
-	read: function () {
+	read: async function () {
 		try {
 			for (var sensor in this.sensors) {
 				var readout = sensorLib.read(this.sensors[sensor].type, this.sensors[sensor].pin);
@@ -54,6 +54,8 @@ const app = {
 				const room = this.sensors[sensor].name;
 				const humidity = readout.humidity.toFixed(1);
 				const temperature = readout.temperature.toFixed(1);
+
+				const previesValue = await modelSensor.findOne().sort({ timestamp: -1 });
 
 				modelSensor.create({
 					name: room,
@@ -71,7 +73,7 @@ const app = {
 				console.log(message);
 
 				// Check if soil is wet
-				controlSoilHumidity(isSoilWet);
+				controlSoilHumidity(isSoilWet, previesValue);
 			}
 		} catch (err) {
 			console.error(err);
@@ -115,6 +117,7 @@ function controlTemperature(temperature) {
 	}
 }
 
-function controlSoilHumidity(soilHumidity) {
+function controlSoilHumidity(soilHumidity, previesValue) {
+	if (previesValue.previesValue === soilHumidity) return;
 	if (soilHumidity === "Dry") sendMessage("Soil is dry, please water the plant");
 }
