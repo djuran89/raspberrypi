@@ -88,7 +88,7 @@ let startAppInterval;
 app.connect()
 	.then(() => {
 		startAppInterval = setInterval(() => {
-			const shouldAppStart = moment().minutes() % minutes === 0;
+			const shouldAppStart = moment().seconds() === 0;
 
 			if (shouldAppStart) {
 				// Start app and clear interval
