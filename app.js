@@ -56,7 +56,7 @@ const app = {
 				const temperature = readout.temperature.toFixed(1);
 
 				const previesValue = await modelSensor.findOne().sort({ timestamp: -1 });
-
+				console.log(previesValue);
 				modelSensor.create({
 					name: room,
 					timestamp: moment().format(),
