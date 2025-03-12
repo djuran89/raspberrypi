@@ -19,3 +19,10 @@ if (arg === "2") {
 	const relay1 = new Gpio(23, { mode: Gpio.OUTPUT });
 	relay1.digitalWrite(0);
 }
+if (arg === "3") {
+	// const ralay_1 = new Raspberry(23);
+	// ralay_1.createGpio();
+	// ralay_1.write(1);
+	const relay1 = new Gpio(23, { mode: Gpio.OUTPUT });
+	relay1.digitalWrite(1);
+}
