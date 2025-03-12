@@ -31,13 +31,11 @@ class Rasberry extends Sensors {
 	}
 
 	turn_on() {
-		const read = this.read();
-		if (read !== this.on) this.write(this.on);
+		this.write(this.on);
 	}
 
 	turn_off() {
-		const read = this.read();
-		if (read !== this.off) this.write(this.off);
+		this.write(this.off);
 	}
 
 	readSensor() {
