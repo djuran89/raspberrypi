@@ -11,6 +11,10 @@ class Sensors {
 		this.name = null;
 		this.type = type;
 		this.pin = pin;
+		this.sensor = null;
+	}
+
+	createSensor() {
 		this.sensor = sensorLib.initialize(this.type, this.pin);
 	}
 
