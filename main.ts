@@ -3,15 +3,20 @@ import moment from "moment";
 
 const tempSensor = new Raspberry(17, 11);
 
-const ralay_1 = new Raspberry(18);
-const ralay_2 = new Raspberry(15);
-const ralay_3 = new Raspberry(14);
-const ralay_4 = new Raspberry(23);
+const Lamp = new Raspberry(18); // Ralay 1
+const Fan = new Raspberry(15); // Ralay 2
+const Heater = new Raspberry(14); // Ralay 3
+const WaterPump = new Raspberry(23); // Ralay 4
 
-const Lamp = ralay_1.createGpio();
-const Fan = ralay_2.createGpio();
-const Heater = ralay_3.createGpio();
-const WaterPump = ralay_4.createGpio();
+Lamp.createGpio();
+Fan.createGpio();
+Heater.createGpio();
+WaterPump.createGpio();
+
+Lamp.turn_off();
+Fan.turn_off();
+Heater.turn_off();
+WaterPump.turn_off();
 
 const application = () => {
 	try {
