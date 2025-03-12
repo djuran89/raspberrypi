@@ -1,0 +1,29 @@
+name: Deploy to Raspberry Pi
+
+on:
+  push:
+    branches:
+      - main  # Pokreće se samo kad gurnemo kod na `main` granu
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -H ${{ secrets.RASPBERRY_PI_IP }} >> ~/.ssh/known_hosts
+
+      - name: Deploy code to Raspberry Pi
+        run: |
+          rsync -avz --delete . pi@${{ secrets.RASPBERRY_PI_IP }}:/home/pi/my_project
+
+      - name: Restart application on Raspberry Pi
+        run: |
+          ssh pi@${{ secrets.RASPBERRY_PI_IP }} "cd /home/pi/raspberrypi && npm install && pm2 restart GardenApp
