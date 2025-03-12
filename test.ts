@@ -1,4 +1,4 @@
-import Raspberry from "./class/Raspberry";
+import Raspberry from "./class/Raspberry.ts";
 
 const Reley = [14, 15, 18, 23];
 var arg = process.argv[2];
