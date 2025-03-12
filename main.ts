@@ -20,18 +20,32 @@ WaterPump.turn_off();
 
 const application = () => {
 	try {
-		const time = moment().format("HH:mm:ss");
-		const { temperature, humidity } = tempSensor.readSensor();
-		console.log(`Time: ${time}`);
-		console.log(`Temperature: ${temperature}`);
-		console.log(`Humidity: ${humidity}`);
+		const time = moment().format("HH:mm");
+		const { temperature } = tempSensor.readSensor();
 
-		if (time === "10:00") {
-			console.log("It's midnight!");
-		}
+		Lamp.turn_on();
+
+		// Heater
+		if (temperature > 28) Heater.turn_off();
+		if (temperature < 20) Heater.turn_on();
+
+		// Lamp
+		if (time === "09:00") Lamp.turn_on();
+		if (time === "19:00") Lamp.turn_off();
+
+		// Fan
+		if (time === "12:00") Fan.turn_on();
+		if (time === "12:15") Fan.turn_off();
+
+		if (time === "16:00") Fan.turn_on();
+		if (time === "16:15") Fan.turn_off();
+
+		// WaterPump
+		if (time === "08:00") WaterPump.turn_on();
+		if (time === "08:05") WaterPump.turn_off();
 	} catch (err) {
 		console.error(err);
 	}
 };
 
-setInterval(application, 3000);
+setInterval(application, 60000);
