@@ -9,7 +9,8 @@ if (arg === "1") {
 	// ralay_1.createGpio();
 	// ralay_1.write(1);
 	const relay1 = new Gpio(23, { mode: Gpio.OUTPUT });
-	relay1.digitalWrite(1);
+	const value = relay1.digitalRead();
+	console.log(value);
 }
 if (arg === "2") {
 	// const ralay_1 = new Raspberry(23);
