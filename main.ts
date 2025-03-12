@@ -1,9 +1,16 @@
 import Raspberry from "./class/Raspberry.ts";
 import moment from "moment";
 
-const run = async () => {
+const tempSensor = new Raspberry(17, 11);
+
+const application = () => {
 	try {
-		const tempSensor = new Raspberry(17, 11);
+		const time = moment().format("HH:mm");
+
+		if (time === "10:00") {
+			console.log("It's midnight!");
+		}
+
 		const { temperature, humidity } = tempSensor.readSensor();
 		console.log(`Temperature: ${temperature}`);
 		console.log(`Humidity: ${humidity}`);
@@ -12,14 +19,4 @@ const run = async () => {
 	}
 };
 
-run();
-
-// const application = () => {
-// 	const time = moment().format("HH:mm");
-
-// 	if (time === "10:00") {
-// 		console.log("It's midnight!");
-// 	}
-// };
-
-// setInterval(application, 1000);
+setInterval(application, 5000);
