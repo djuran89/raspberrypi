@@ -1,5 +1,5 @@
 import { Gpio } from "pigpio";
-import Sensors from "./Sensors";
+import Sensors from "./Sensors.ts";
 
 class Rasberry extends Sensors {
 	private raspberryPin: number;

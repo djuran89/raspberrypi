@@ -1,4 +1,4 @@
-import Raspberry from "./class/Raspberry";
+import Raspberry from "./class/Raspberry.ts";
 import moment from "moment";
 
 const run = async () => {
