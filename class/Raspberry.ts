@@ -28,6 +28,10 @@ class Rasberry extends Sensors {
 	createGpio() {
 		this.gpio = new Gpio(this.raspberryPin, { mode: this.isInput ? Gpio.INPUT : Gpio.OUTPUT });
 	}
+
+	setInput(input: boolean) {
+		this.isInput = input;
+	}
 }
 
 export default Rasberry;
