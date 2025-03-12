@@ -8,10 +8,10 @@ const ralay_4 = new Raspberry(23);
 var arg = process.argv[2];
 
 if (arg === "1") {
-	ralay_1.createGpio();
-	ralay_1.write(1);
+	ralay_2.createGpio();
+	ralay_2.write(1);
 }
 if (arg === "2") {
-	ralay_1.createGpio();
-	ralay_1.write(0);
+	ralay_2.createGpio();
+	ralay_2.write(0);
 }
