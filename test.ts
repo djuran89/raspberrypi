@@ -1,4 +1,4 @@
-import Raspberry from "./class/Raspberry";
+import Raspberry from "./class/Raspberry.ts";
 
 const Reley = [14, 15, 18, 23];
 const ralay_1 = new Raspberry(14);
