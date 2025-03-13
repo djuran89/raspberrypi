@@ -23,8 +23,6 @@ const application = () => {
 		const time = moment().format("HH:mm");
 		const { temperature } = tempSensor.readSensor();
 
-		Lamp.turn_on();
-
 		// Heater
 		if (temperature > 28) Heater.turn_off();
 		if (temperature < 20) Heater.turn_on();
