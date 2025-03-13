@@ -46,4 +46,4 @@ const application = () => {
 	}
 };
 
-setInterval(application, 3000);
+setInterval(application, 60000);
